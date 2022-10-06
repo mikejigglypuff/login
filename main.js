@@ -27,8 +27,25 @@ function clearIDPW() {
 }
 
 function checkIDPW(id, pw) {
-  var xmlHttp = new XMLHttpRequest();
-  
+  const request = new Request("", {
+    method: 'GET',
+    body: '{"paramID": id, "paramPW": pw}'
+  });
+
+  fetch(request)
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error('Something went wrong on API server!');
+    }
+  })
+  .then((response) => {
+    console.debug(response);
+  }).catch((error) => {
+    console.error(error);
+  });
+
 }
 
 function moveToRegister() {
